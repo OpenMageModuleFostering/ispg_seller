@@ -1,0 +1,158 @@
+<?php 
+//echo "<pre>";print_r($this->getSellercart());
+$sellCart=$this->getSellercart();
+$baseUrl=$this->getUrl('');
+$sellerUrl=$this->getUrl('seller');
+$currencySymbol=Mage::helper('seller')->getCurrencySymbol();
+
+if(count($sellCart)>0){
+?>
+<!-- Cart html -->
+<div class="col-main">
+  <div class="cart">
+    <div class="page-title title-buttons">
+        <h1>Selling Cart</h1>
+        <ul class="checkout-types">
+          <li>
+              <button onclick="window.location='<?php echo $sellerUrl."index/checkout/"; ?>';" class="button btn-proceed-checkout btn-checkout" title="Proceed to Checkout" type="button">
+                  <span>
+                      <span>Proceed to Checkout</span>
+                  </span>
+              </button>
+          </li>
+        </ul>
+    </div>
+    <!--<ul class="messages">
+        <li class="success-msg">
+            <ul>
+                <li>
+                    <span>2003-09 Dodge Trucks L6-5.9L/6.7L was added to your shopping cart.</span>
+                </li>
+            </ul>
+         </li>
+    </ul>-->
+    <form method="post" action="<?php echo $sellerUrl; ?>">
+        <fieldset>
+            <table class="data-table cart-table">
+                <colgroup>
+                    <col width="1">
+                    <col>
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                    <col width="1">
+                </colgroup>
+                <thead>
+                    <tr class="first last">
+                        <th rowspan="1">&nbsp;</th>
+                        <th rowspan="1"><span class="nobr">Product Name</span></th>
+                        <th colspan="1" class="a-center"><span class="nobr">Unit Price</span></th>
+                        <th class="a-center" rowspan="1">Qty</th>
+                        <th colspan="1" class="a-center">Subtotal</th>
+                        <th class="a-center" rowspan="1">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr class="first last">
+                        <td class="a-right last" colspan="50">
+                            <button onclick="setLocation('<?php echo $baseUrl; ?>')" class="button btn-continue" title="Continue Selling" type="button"><span><span>Continue Selling</span></span></button>
+                            <button class="button btn-update" title="Update Selling Cart" value="update_qty" name="update_cart_action" type="submit"><span><span>Update Selling Cart</span></span></button>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                <?php 
+                $totalPrice=Mage::helper('seller')->getCartTotal($sellCart);
+                foreach($sellCart as $prId=>$prIdQtyArr){
+                    $_product = Mage::getModel('catalog/product')->load($prId);
+                    $product_price=Mage::helper('seller')->getPrdPrice($prId);
+                ?>
+                    <tr class="first last odd">
+                        <td>
+                            <a class="product-image" title="<?php echo $_product->getName(); ?>" href="<?php echo $_product->getProductUrl(); ?>">
+                                <img width="75" height="75" alt="<?php echo $_product->getName(); ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail'); ?>">
+                            </a>
+                        </td>
+                        <td>
+                            <h2 class="product-name">
+                                <a href="<?php echo $_product->getProductUrl(); ?>"><?php echo $_product->getName(); ?></a>
+                            </h2>
+                        </td>
+                        <td class="a-right">
+                            <span class="cart-price">
+                                <span class="price"><?php echo $currencySymbol.$product_price; ?></span>                
+                            </span>
+                        </td>
+                        <td class="a-center">
+                            <input maxlength="12" class="input-text qty" title="Qty" size="4" value="<?php echo $prIdQtyArr['quantity']; ?>" name="sellform[<?php echo $prId; ?>][qty]">
+                        </td>
+                        <td class="a-right">
+                            <span class="cart-price">
+                                <span class="price"><?php echo $currencySymbol.$product_price*($prIdQtyArr['quantity']); ?></span>                            
+                            </span>
+                        </td>
+                        <td class="a-center last">
+                            <a class="btn-remove btn-remove2" title="Remove item" href="<?php echo $sellerUrl."index/rmvfromcart/ss/$prId"; ?>">Remove item</a>
+                        </td>
+                    </tr>
+              <?php } ?>
+               </tbody>
+            </table>
+        </fieldset>
+    </form>
+    <div class="cart-collaterals">
+        <div class="totals">
+                <table id="shopping-cart-totals-table">
+                    <colgroup>
+                        <col>
+                        <col width="1">
+                    </colgroup>
+                    <tfoot>
+                        <tr>
+                            <td colspan="1" class="a-right" style=""><strong>Grand Total</strong></td>
+                            <td class="a-right" style=""><strong><span class="price"><?php echo $currencySymbol.$totalPrice; ?></span></strong></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td colspan="1" class="a-right" style="">Subtotal</td>
+                            <td class="a-right" style=""><span class="price"><?php echo $currencySymbol.$totalPrice; ?></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="checkout-types">
+                    <li>
+                        <button onclick="window.location='<?php echo $sellerUrl."index/checkout/"; ?>';" class="button btn-proceed-checkout btn-checkout" title="Proceed to Checkout" type="button">
+                            <span>
+                                <span>Proceed to Checkout</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+         </div>
+    </div>
+</div>
+</div>
+<!-- Cart html -->
+<?php 
+} else {
+?>
+<div class="col-main">
+  <div class="cart">
+    <div class="page-title title-buttons">
+        <h1>Selling Cart</h1>
+        <ul class="checkout-types">
+          <li>
+          </li>
+        </ul>
+    </div>
+    <div>
+        Selling Cart is empty. <a href="<?php echo $sellerUrl."index/sellorders/"; ?>">Show Sell Orders...</a>
+    </div>
+  </div>
+</div>
+<?php 
+}
+?>

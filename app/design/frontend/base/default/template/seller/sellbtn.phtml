@@ -1,0 +1,8 @@
+<div style="padding-top: 30px;">
+<form name="sellform" id="sellform" action="<?php echo $this->getSellerUrl(); ?>" method="post"> 
+<input type="hidden" name="prId" value="<?php echo $this->getSellProduct()->getId(); ?>" />
+<button class="button btn-cart" title="<?php echo $this->__('SELL') ?>" type="submit">
+    <span><span><?php echo $this->__('SELL') ?></span></span>
+</button>
+</form>
+</div>

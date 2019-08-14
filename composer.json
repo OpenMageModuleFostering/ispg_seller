@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Ispg_Seller",
+    "type": "magento-module",
+    "license": "OSL-v3.0",
+    "homepage": "",
+    "description": "Seller extension for Magento.",
+    "authors": [
+    {
+        "name": "Rahul K",
+        "email": "rahul_kalyanpur@ispg.in"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

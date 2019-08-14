@@ -1,0 +1,74 @@
+<?php
+$sellerUrl=$this->getUrl('seller');
+$customerOrders=$this->customerOrders();
+$currencySymbol=Mage::helper('seller')->getCurrencySymbol();
+?>
+    <div class="page-title title-buttons">
+        <h1>Sell Orders History</h1>
+        <ul class="checkout-types">
+          <li>
+          </li>
+        </ul>
+    </div>
+
+<?php 
+if(count($customerOrders)>0){
+    foreach($customerOrders as $ordersArr){
+?>
+<div class="block block-cart">
+    <div class="block-title">
+        <strong><span>Order Number: <?php echo $ordersArr['order_id']; ?></span></strong>
+    </div>
+    <div class="block-content">
+       <p class="block-subtitle">
+           Order Date and Time: <span class="product-name"><?php echo date("j F Y , h:m a",Mage::helper('seller')->getTimestamp($ordersArr['created_time'])); ?></span>&nbsp;&nbsp;&nbsp;
+           Payment Status: <span class="product-name"><?php echo $this->getPaymentStatus($ordersArr['payment_status']); ?></span>&nbsp;&nbsp;&nbsp;
+           Order Status: <span class="product-name"><?php echo $this->getOrderStatus($ordersArr['order_status']); ?></span>&nbsp;&nbsp;&nbsp;
+           [ <a href="javascript:dispPrds(<?php echo $ordersArr['order_id']; ?>);" id="prdsLink<?php echo $ordersArr['order_id']; ?>">Show Details</a> ]
+       </p> 
+    </div>
+
+    <div class="block-content" id="prdsBlock<?php echo $ordersArr['order_id']; ?>" style="display:none;">
+<?php 
+        $total=0;
+        foreach($this->orderDetails($ordersArr['order_id']) as $prdDtlsArr){
+            $total=$total+$prdDtlsArr['subtotal'];
+            //$_product = Mage::getModel('catalog/product')->load($prId);
+?>
+        <ol class="mini-products-list">
+            <li class="item last odd">
+                <!--<a class="product-image" title="<?php //echo $_product->getName(); ?>" href="<?php //echo $_product->getProductUrl(); ?>">
+                    <img width="50" height="50" alt="<?php //echo $_product->getName(); ?>" src="<?php //echo $this->helper('catalog/image')->init($_product, 'thumbnail'); ?>">
+                </a>-->
+                <div class="product-details">
+                    <p class="product-name"><?php echo $prdDtlsArr['name']; ?></p>
+                    <strong><?php echo $prdDtlsArr['qty']; ?></strong> x <span class="price"><?php echo $currencySymbol.$prdDtlsArr['price']; ?></span>                    
+                </div>
+            </li>
+        </ol>
+<?php 
+        } 
+?>
+        <p class="block-subtitle">Grand Total: <?php echo $currencySymbol.$total; ?></p>
+        <p class="block-subtitle"></p>
+     </div>
+</div>
+<?php 
+    }
+} else {
+    echo "No Sell Orders";
+}
+?>
+<script type="text/javascript">
+function dispPrds(id){
+   var prdObj=document.getElementById("prdsBlock"+id); 
+   var linkObj=document.getElementById("prdsLink"+id);
+   if(prdObj.style.display=='none'){
+        prdObj.style.display='block';
+        linkObj.innerHTML='Hide Details';
+   } else {
+        prdObj.style.display='none';
+        linkObj.innerHTML='Show Details';
+   }
+}
+</script>

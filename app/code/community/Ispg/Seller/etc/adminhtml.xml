@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adminhtml>
+		<acl>
+            <resources>
+                <admin>  
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <seller_option translate="title" module="seller">  
+                                            <title>Test Section ACL</title> 
+                                            <sort_order>99</sort_order>
+                                        </seller_option>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+</adminhtml>

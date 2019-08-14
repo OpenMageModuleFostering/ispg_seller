@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ispg_Seller>
+            <active>true</active>
+            <!--<codePool>local</codePool>-->
+			<codePool>community</codePool>
+        </Ispg_Seller>
+    </modules>
+</config> 

@@ -1,0 +1,137 @@
+<?php
+$sellerUrl=$this->getUrl('seller');
+$sellCart=$this->getSellercart();
+$currencySymbol=Mage::helper('seller')->getCurrencySymbol();
+if(Mage::getStoreConfig('seller_option/sellprices/shipping')==''){
+    $sell_shipping="[ Seller Address should be filled in admin panel ]";
+} else {
+    $sell_shipping=Mage::getStoreConfig('seller_option/sellprices/shipping');
+}
+?>
+    <div class="page-title title-buttons">
+        <h1>Seller Checkout</h1>
+        <ul class="checkout-types">
+          <li>
+          </li>
+        </ul>
+    </div>
+
+
+<div class="block block-cart">
+    <div class="block-title">
+        <strong><span>Seller Cart</span></strong>
+    </div>
+    <div class="block-content">
+<?php 
+$totalPrice=Mage::helper('seller')->getCartTotal($sellCart);
+foreach($sellCart as $prId=>$prIdQtyArr){
+    $_product = Mage::getModel('catalog/product')->load($prId);
+    $product_price=Mage::helper('seller')->getPrdPrice($prId);
+?>
+        <ol class="mini-products-list">
+            <li class="item last odd">
+                <a class="product-image" title="<?php echo $_product->getName(); ?>" href="<?php echo $_product->getProductUrl(); ?>">
+                    <img width="50" height="50" alt="<?php echo $_product->getName(); ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail'); ?>">
+                </a>
+                <div class="product-details">
+                    <p class="product-name"><a href="<?php echo $_product->getProductUrl(); ?>"><?php echo $_product->getName(); ?></a></p>
+                    <strong><?php echo $prIdQtyArr['quantity']; ?></strong> x <span class="price"><?php echo $currencySymbol.$product_price; ?></span>                    
+                </div>
+            </li>
+        </ol>
+<?php } ?>
+        <p class="block-subtitle">Grand Total: <?php echo $currencySymbol.$totalPrice; ?></p>
+     </div>
+</div>
+
+<div class="fieldset">
+        <h2 class="legend">Shipping Address</h2>
+        <ul class="form-list">
+            <li class="wide">
+                <label class="required" for="street_1"><em>*</em><?php echo $sell_shipping; ?></label>
+            </li>
+        </ul>
+</div>
+
+<form name="submitseller" id="submitseller" action="<?php echo $sellerUrl."index/submitseller/"; ?>" method="post">
+<div class="fieldset">
+    <h2 class="legend">Contact Information</h2>
+    <ul class="form-list">
+            <li class="fields">
+                <div class="customer-name">
+                    <div class="field name-firstname">
+                        <label class="required" for="firstname"><em>*</em>First Name</label>
+                        <div class="input-box">
+                            <input type="text" class="input-text required-entry" maxlength="255" title="First Name" value="" name="firstname" id="firstname">
+                        </div>
+                    </div>
+                    <div class="field name-lastname">
+                        <label class="required" for="lastname"><em>*</em>Last Name</label>
+                        <div class="input-box">
+                            <input type="text" class="input-text required-entry" maxlength="255" title="Last Name" value="" name="lastname" id="lastname">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label class="required" for="telephone"><em>*</em>Telephone</label>
+                    <div class="input-box">
+                        <input type="text" id="telephone" class="input-text required-entry" title="Telephone" value="" name="telephone">
+                    </div>
+                </div>
+            </li>
+    </ul>
+</div>
+
+<div class="fieldset">
+    <h2 class="legend">Bank Account Details</h2>
+    <ul class="form-list">
+            <li class="fields">
+                <div class="field">
+                    <label class="required" for="acc_name"><em>*</em>Acc holder Name</label>
+                    <div class="input-box">
+                        <input type="text" name="acc_name" id="acc_name" class="input-text required-entry" title="Acc holder Name" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="required" for="acc_num"><em>*</em>Acc number</label>
+                    <div class="input-box">
+                        <input type="text" name="acc_num" id="acc_num" class="input-text required-entry" title="Acc number" value="">
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label class="required" for="acc_bank"><em>*</em>Bank name</label>
+                    <div class="input-box">
+                        <input type="text" name="acc_bank" id="acc_bank" class="input-text required-entry" title="Bank name" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="required" for="acc_branch"><em>*</em>Branch</label>
+                    <div class="input-box">
+                        <input type="text" name="acc_branch" id="acc_branch" class="input-text required-entry" title="Branch" value="">
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label class="required" for="acc_ifsc"><em>*</em>IFSC/RTGS code</label>
+                    <div class="input-box">
+                        <input type="text" name="acc_ifsc" id="acc_ifsc" class="input-text required-entry" title="IFSC/RTGS code" value="">
+                    </div>
+                </div>
+            </li>
+    </ul>
+</div>
+
+<div class="buttons-set">
+        <p class="required">* Required Fields</p>
+        <button class="button" title="Submit" type="submit"><span><span>Submit</span></span></button>
+</div>
+</form>
+
+<script type="text/javascript">
+    var dataForm = new VarienForm('submitseller', true);
+</script>

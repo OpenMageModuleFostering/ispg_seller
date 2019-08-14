@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <tabs>
+        <seller translate="label" module="seller">
+            <label>Sellers</label>
+            <sort_order>140</sort_order>
+        </seller>
+    </tabs>
+	<sections>
+	    <seller_option translate="label" module="seller">
+	        <label>Sellers Information</label>
+	        <tab>seller</tab> 
+	        <sort_order>100</sort_order>
+	        <show_in_default>1</show_in_default>
+	        <show_in_website>1</show_in_website>
+	        <show_in_store>1</show_in_store>
+	        <groups>
+                <sellprices translate="label">
+                    <label>Sellers Information</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+                        <reduction translate="label price reduction">
+                            <label>Price reduction (Percentage)</label>
+                            <frontend_type>text</frontend_type>
+						    <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                       </reduction>
+                    </fields>
+					<fields>
+                        <shipping translate="label shipping">
+                            <label>Seller Shipping Address</label>
+                            <frontend_type>text</frontend_type>
+						    <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                       </shipping>
+                    </fields>
+                </sellprices>
+	        </groups>
+	    </seller_option>
+	</sections>
+</config>

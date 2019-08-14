@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <seller_index_index>
+        <reference name="root">
+        	<action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="seller/seller" name="seller" template="seller/seller.phtml" />
+        </reference>
+    </seller_index_index>
+    <seller_index_checkout>
+        <reference name="root">
+        	<action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="seller/checkout" name="checkout" template="seller/checkout.phtml" />
+        </reference>
+    </seller_index_checkout>
+    <seller_index_submitseller>
+        <reference name="root">
+        	<action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="seller/submitseller" name="submitseller" template="seller/submitseller.phtml" />
+        </reference>
+    </seller_index_submitseller>
+    <seller_index_sellorders>
+        <reference name="root">
+        	<action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="seller/sellorders" name="sellorders" template="seller/sellorders.phtml" />
+        </reference>
+    </seller_index_sellorders>
+
+	<catalog_product_view>
+		<!--<reference name="product.info.addtocart">
+			<block type="seller/button" name="sellerbtn" after="product.info.addtocart" template="seller/sellbtn.phtml" /> 
+		</reference>-->
+		<reference type="catalog/product_view_additional" name="product.info.additional">
+			<block type="seller/button" name="sellerbtn" after="product.info.additional" template="seller/sellbtn.phtml" /> 
+		</reference>
+		<!--<reference name="content">
+			<block type="seller/button" name="sellerbtn" after="product.info" template="seller/sellbtn.phtml" /> 
+		</reference>-->
+	</catalog_product_view>
+</layout> 
